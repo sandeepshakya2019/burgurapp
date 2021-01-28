@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Layout from "./Components/Layout/Layout";
+import BurgerBuilder from "./Containers/BurgerBuilder/BurgerBuilder";
+import Checkout from "./Containers/Checkout/Checkout";
+import { Route, Switch } from "react-router-dom";
+import ContactData from "./Containers/Checkout/ContactData/ContactData";
+import Orders from "./Containers/Orders/Orders";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        <Switch>
+          <Route exact path="/" component={BurgerBuilder} />
+          <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/checkout/contact-data" component={ContactData} />
+          <Route exact path="/orders" component={Orders} />
+        </Switch>
+      </Layout>
     </div>
   );
 }
