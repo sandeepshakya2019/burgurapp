@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import CheckoutSummary from "../../Components/Order/CheckoutSummary/CheckoutSummary";
-
+import { connect } from "react-redux";
 function Checkout(props) {
-  //   console.log(props.location.state.total);
-  const [ingr, setingr] = useState({});
+  // console.log(props.ings);
   useEffect(() => {
-    const query = new URLSearchParams(props.location.search);
-    const ingredients = {};
-    for (let param of query.entries()) {
-      ingredients[param[0]] = +param[1];
+    let add = 0;
+    Object.values(props.ings).map((el) => (add = add + el));
+    // console.log(add);
+    if (add <= 0) {
+      // console.log("d");
+      props.history.push("/");
     }
-    setingr(ingredients);
   }, []);
   const checkoutcancelHandler = () => {
     props.history.push("/");
@@ -19,14 +19,14 @@ function Checkout(props) {
     // props.history.replace("/checkout/contact-data");
     props.history.replace({
       pathname: "/checkout/contact-data",
-      state: { ingredient: ingr, total: props.location.state.total },
+      // state: { ingredient: props.ings, total: props.total },
     });
   };
 
   return (
     <div>
       <CheckoutSummary
-        ingredients={ingr}
+        ingredients={props.ings}
         checkoutcancel={checkoutcancelHandler}
         checkoutContinue={checkoutcontinueHandler}
       />
@@ -34,4 +34,10 @@ function Checkout(props) {
   );
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+  };
+};
+
+export default connect(mapStateToProps)(Checkout);

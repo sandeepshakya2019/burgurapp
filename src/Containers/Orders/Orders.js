@@ -33,6 +33,7 @@ function Orders() {
       {orders.map((order) => (
         <Order
           key={order.id}
+          del={order.deliveryMethod}
           customer={order.customer}
           ingredients={order.ingredients}
           price={order.price}

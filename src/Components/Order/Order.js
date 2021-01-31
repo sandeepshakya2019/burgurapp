@@ -2,7 +2,8 @@ import React from "react";
 import Burger from "../Burger/Burger";
 import "./Order.css";
 function Order(props) {
-  //   console.log(props.ingredients);
+  // console.log(props);
+  // console.log(props.customer.name);
   const myStyle = {
     textTransform: "capitalize",
     display: "inline-block",
@@ -17,8 +18,9 @@ function Order(props) {
         <br />
         <pre>Name : {props.customer.name} </pre>
         <pre>Address : {props.customer.Address} </pre>
+        <pre>Country : {props.customer.Country} </pre>
         <pre>Pin Code : {props.customer.pincode} </pre>
-        <pre>Delivery Method : {props.customer.deliveryMethod} </pre>
+        <pre>Delivery Method : {props.del} </pre>
         <br />
         <h5>
           Price : <pre style={{ display: "inline" }}>{props.price}</pre>
@@ -31,6 +33,8 @@ function Order(props) {
         <pre style={myStyle}>Cheese : {props.ingredients.cheese}</pre>
         <pre style={myStyle}>Meat : {props.ingredients.meat}</pre>
         <pre style={myStyle}>Salad : {props.ingredients.salad}</pre>
+
+        <br />
       </div>
       <br />
       <div className="bur col">

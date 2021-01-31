@@ -15,8 +15,6 @@ export default function Buildcon({
       {/* <div className="Label">{ingrPrice === 0 ?: `₹ ${ingrPrice}:`₹ ${ingrPrice}`}</div> */}
       {/* <div className="Label">`₹ ${ingrPrice}`</div> */}
 
-      <div className="Label">₹ {ingrPrice}</div>
-
       <button className="Less" onClick={deducted} disabled={disabled}>
         Less
       </button>

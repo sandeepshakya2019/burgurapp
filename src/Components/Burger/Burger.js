@@ -3,7 +3,8 @@ import "./Burger.css";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 function Burger({ ingredients }) {
-  //   console.log(ingredients);
+  // console.log(ingredients);
+  // ingredients = [...ingredients];
   let transformedIngredient = Object.keys(ingredients)
     .map((igkey) => {
       return [...Array(ingredients[igkey])].map((_, i) => {

@@ -16,11 +16,10 @@ export default function BuildControl({
   disabled,
   price,
   ingprice,
-  ingrPrice,
+  // ingrPrice,
   updatePurchase,
   orderButton,
 }) {
-  // console.log(purchase);
   return (
     <>
       <div className="BuildControl1">
@@ -29,7 +28,7 @@ export default function BuildControl({
           <Buildcon
             ingprice={ingprice[ctrl.type]}
             key={ctrl.lebel}
-            ingrPrice={ingrPrice[ctrl.type]}
+            // ingrPrice={ingrPrice[ctrl.type]}
             added={() => ingrAdd(ctrl.type)}
             deducted={() => ingrDed(ctrl.type)}
             disabled={disabled[ctrl.type]}
