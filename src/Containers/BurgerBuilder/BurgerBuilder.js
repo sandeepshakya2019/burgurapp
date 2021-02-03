@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BuildControl from "../../Components/Burger/BuildControls/BuildControl";
 import Burger from "../../Components/Burger/Burger";
 import OrderSummary from "../../Components/Burger/OrderSummary/OrderSummary";
 import Modal from "../../Components/UI/Modal/Modal";
-// import axios from "../../axios-order";
+import axios from "../../axios-order";
 import Spinner from "../../Components/UI/Spinner/Spinner";
 // import withErrorHandler from "../../Components/WithErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
-import * as actionTypes from "../../Store/action";
+import * as burgerBuilderActions from "../../Store/actions/index";
 
 const INGREDIENT_PRICE = { salad: 10, cheese: 20, meat: 50, bacon: 70 };
 
 function BurgerBuilder(props) {
   // console.log(props);
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       "https://burger-project-a9c8b-default-rtdb.firebaseio.com/ingredients.json"
-  //     )
-  //     .then((res) => {
-  //       setIngredients(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // });
+  useEffect(() => {
+    axios
+      .get(
+        "https://burger-project-a9c8b-default-rtdb.firebaseio.com/ingredients.json"
+      )
+      .then((res) => {
+        // setIngredients(res.data);
+      })
+      .catch((err) => console.log(err));
+  });
   // const [purchase, setPurchase] = useState(false);
   const [orderButton, setOrderButton] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -167,12 +167,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onIngreAdd: (ingName) =>
-      dispatch({ type: actionTypes.ADD_INGREDIENTS, ingredientName: ingName }),
+      // dispatch({ type: actionTypes.ADD_INGREDIENTS, ingredientName: ingName }),
+      dispatch(burgerBuilderActions.addIngredient(ingName)),
+
     onIngreRemove: (ingName) =>
-      dispatch({
-        type: actionTypes.REMOVE_INGREDIENTS,
-        ingredientName: ingName,
-      }),
+      dispatch(burgerBuilderActions.removeIngredient(ingName)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);

@@ -21,7 +21,7 @@ function ContactData(props) {
       // console.log("d");
       props.history.push("/");
     }
-  }, []);
+  }, [props.ings, props.history]);
   const [loading, setLoading] = useState(false);
   const [pro, setpro] = useState("");
   const [name, setName] = useState("");
@@ -55,7 +55,13 @@ function ContactData(props) {
       if (san === false) {
         setpro("Email is not Correct");
       } else {
-        orderHandler();
+        if (typeof country === "string") {
+          if (typeof price === "number" && price === props.price + 20 + 20) {
+            orderHandler();
+          }
+        } else {
+          setpro("Country Should be in String");
+        }
       }
     }
   };

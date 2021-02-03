@@ -38,15 +38,13 @@ function OrderSummary({ ingredients, cancelButton, price, purchaseButton }) {
       <br />
       <br />
       <p>Continue to Checkout ?</p>
-      <br />
-
       <button
-        className="checkout Button Danger"
+        className="btn btn-danger checkout"
         onClick={() => purchaseButton()}
       >
         CHECKOUT
       </button>
-      <button className="Button Success cancel" onClick={() => cancelButton()}>
+      <button className="btn btn-success cancel" onClick={() => cancelButton()}>
         CANCEL
       </button>
     </div>

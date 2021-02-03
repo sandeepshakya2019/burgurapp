@@ -11,7 +11,7 @@ function Checkout(props) {
       // console.log("d");
       props.history.push("/");
     }
-  }, []);
+  }, [props.ings, props.history]);
   const checkoutcancelHandler = () => {
     props.history.push("/");
   };
