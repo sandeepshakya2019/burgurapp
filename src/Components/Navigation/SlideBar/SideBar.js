@@ -12,7 +12,7 @@ function SideBar({ openbar, closed }) {
   return (
     <>
       <Backdrop show={openbar} cancelButton={closed} />
-      <div className={attachedClasses.join(" ")}>
+      <div className={attachedClasses.join(" ")} onClick={closed}>
         <Logo height="11%" />
         <div className="margin"></div>
         <nav>

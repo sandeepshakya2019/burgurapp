@@ -3,4 +3,6 @@ export {
   removeIngredient,
   initfetchIngredients,
 } from "./burgerBuilder";
-export {} from "./order";
+// export {} from "./order";
+
+export { auth, logout, authCheckLocal } from "./auth";

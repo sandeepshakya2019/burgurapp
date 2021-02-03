@@ -152,8 +152,8 @@ function BurgerBuilder(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    ing: state.ingredients,
-    total: state.total,
+    ing: state.burgerBuilder.ingredients,
+    total: state.burgerBuilder.total,
   };
 };
 

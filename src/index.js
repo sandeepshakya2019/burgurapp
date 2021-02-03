@@ -5,12 +5,19 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import burgerBuilderReducer from "./Store/reducers/burgerBuilder";
+import authReducer from "./Store/reducers/auth";
+// using the deployement server make the develoevement
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const rootReducer = combineReducers({
+  burgerBuilder: burgerBuilderReducer,
+  auth: authReducer,
+});
 const store = createStore(
-  burgerBuilderReducer,
+  rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
 ReactDOM.render(

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../axios-order";
 import Spinner from "../../../Components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 function ContactData(props) {
   // const [datafectch, setdatafectch] = useState({
   //   ingredients: "",
@@ -18,6 +19,7 @@ function ContactData(props) {
   // }, []);
 
   useEffect(() => {
+    // console.log(props.email);
     if (!props.ings) {
       props.history.push("/");
     } else {
@@ -33,7 +35,7 @@ function ContactData(props) {
   const [loading, setLoading] = useState(false);
   const [pro, setpro] = useState("");
   const [name, setName] = useState("");
-  const [email, setemail] = useState("");
+  const [email, setemail] = useState(props.email);
   const [address, setaddress] = useState("");
   const [country, setcountry] = useState("");
   const [delivery, setdelivery] = useState("Slow");
@@ -72,8 +74,12 @@ function ContactData(props) {
             price === props.price + 20 + 20 &&
             post !== "NaN"
           ) {
-            alert("orderPlaced");
-            orderHandler();
+            if (email === props.email) {
+              orderHandler();
+            } else {
+              setpro("EmailId changed");
+            }
+            // alert("orderPlaced");
           } else {
             setpro("Should Be in Number");
           }
@@ -102,16 +108,20 @@ function ContactData(props) {
         Country: country,
         email: email,
         pincode: pincode,
+        userId: props.userId,
       },
       deliveryMethod: delivery,
     };
+    // isValidate();
+    // Make the validation before storing at the server
     axios
-      .post("/orders.json", order)
+      .post("/orders.json?auth=" + props.token, order)
       .then((res) => {
         // console.log(res);
         setLoading(false);
         // setOrderButton(false);
         // alert("Order Placed");
+        alert("Order Placed");
         props.history.push("/");
       })
       .catch((err) => {
@@ -127,8 +137,13 @@ function ContactData(props) {
   if (pro) {
     p = pro;
   }
+  let redirect = null;
+  if (!props.token) {
+    redirect = <Redirect to="/login" />;
+  }
   return (
     <div className="container">
+      {redirect}
       <div className="ds" style={{ color: "red" }}>
         {p}
       </div>
@@ -147,23 +162,7 @@ function ContactData(props) {
             autoFocus
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
-            required
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
-        </div>
+
         <div className="mb-3">
           <label htmlFor="address" className="form-label">
             Address
@@ -205,10 +204,10 @@ function ContactData(props) {
             />
           </div>
         </div>
-        <div class="form-group">
-          <label for="select">Delivery Method</label>
+        <div className="form-group">
+          <label htmlFor="select">Delivery Method</label>
           <select
-            class="form-control"
+            className="form-control"
             id="select"
             onClick={(e) => setdelivery(e.target.value)}
           >
@@ -226,8 +225,11 @@ function ContactData(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.total,
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.total,
+    token: state.auth.token,
+    email: state.auth.email,
+    userId: state.auth.userId,
   };
 };
 

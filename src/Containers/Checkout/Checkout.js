@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import CheckoutSummary from "../../Components/Order/CheckoutSummary/CheckoutSummary";
 import { connect } from "react-redux";
 function Checkout(props) {
   // console.log(props.ings);
   useEffect(() => {
-    let add = 0;
-    Object.values(props.ings).map((el) => (add = add + el));
-    // console.log(add);
-    if (add <= 0) {
-      // console.log("d");
+    // console.log(props.isAuth);
+    if (!props.ings) {
       props.history.push("/");
+    } else {
+      let add = 0;
+      Object.values(props.ings).map((el) => (add = add + el));
+      // console.log(add);
+      if (add <= 0) {
+        // console.log("d");
+        props.history.push("/");
+      }
     }
-  }, [props.ings, props.history]);
+  }, []);
   const checkoutcancelHandler = () => {
     props.history.push("/");
   };
@@ -23,8 +29,13 @@ function Checkout(props) {
     });
   };
 
+  let redirect = null;
+  if (!props.isAuth) {
+    redirect = <Redirect to="/login" />;
+  }
   return (
     <div>
+      {redirect}
       <CheckoutSummary
         ingredients={props.ings}
         checkoutcancel={checkoutcancelHandler}
@@ -36,7 +47,8 @@ function Checkout(props) {
 
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
+    ings: state.burgerBuilder.ingredients,
+    isAuth: state.auth.token !== null,
   };
 };
 

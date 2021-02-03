@@ -27,7 +27,7 @@ export default function BuildControl({
         {control.map((ctrl) => (
           <Buildcon
             ingprice={ingprice[ctrl.type]}
-            key={ctrl.lebel}
+            key={ctrl.label}
             // ingrPrice={ingrPrice[ctrl.type]}
             added={() => ingrAdd(ctrl.type)}
             deducted={() => ingrDed(ctrl.type)}
