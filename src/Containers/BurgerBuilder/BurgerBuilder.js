@@ -3,7 +3,7 @@ import BuildControl from "../../Components/Burger/BuildControls/BuildControl";
 import Burger from "../../Components/Burger/Burger";
 import OrderSummary from "../../Components/Burger/OrderSummary/OrderSummary";
 import Modal from "../../Components/UI/Modal/Modal";
-import axios from "../../axios-order";
+// import axios from "../../axios-order";
 import Spinner from "../../Components/UI/Spinner/Spinner";
 // import withErrorHandler from "../../Components/WithErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
@@ -14,18 +14,11 @@ const INGREDIENT_PRICE = { salad: 10, cheese: 20, meat: 50, bacon: 70 };
 function BurgerBuilder(props) {
   // console.log(props);
   useEffect(() => {
-    axios
-      .get(
-        "https://burger-project-a9c8b-default-rtdb.firebaseio.com/ingredients.json"
-      )
-      .then((res) => {
-        // setIngredients(res.data);
-      })
-      .catch((err) => console.log(err));
-  });
+    props.onInitIngredients();
+  }, []);
   // const [purchase, setPurchase] = useState(false);
   const [orderButton, setOrderButton] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   // const [ingredients, setIngredients] = useState({
   //   salad: 0,
   //   cheese: 0,
@@ -145,9 +138,9 @@ function BurgerBuilder(props) {
       />
     );
   }
-  if (loading) {
-    orderSummarybyDe = <Spinner />;
-  }
+  // if (loading) {
+  //   orderSummarybyDe = <Spinner />;
+  // }
   return (
     <div>
       <Modal show={orderButton} cancelButton={cancelButtonClicked}>
@@ -169,9 +162,10 @@ const mapDispatchToProps = (dispatch) => {
     onIngreAdd: (ingName) =>
       // dispatch({ type: actionTypes.ADD_INGREDIENTS, ingredientName: ingName }),
       dispatch(burgerBuilderActions.addIngredient(ingName)),
-
     onIngreRemove: (ingName) =>
       dispatch(burgerBuilderActions.removeIngredient(ingName)),
+    onInitIngredients: () =>
+      dispatch(burgerBuilderActions.initfetchIngredients()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);

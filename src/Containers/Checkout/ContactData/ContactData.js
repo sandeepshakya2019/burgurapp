@@ -13,15 +13,23 @@ function ContactData(props) {
   //   pincode: "",
   //   deliveryMethod: "",
   // });
+  // useEffect(() => {
+  //   console.log(props);
+  // }, []);
+
   useEffect(() => {
-    let add = 0;
-    Object.values(props.ings).map((el) => (add = add + el));
-    // console.log(add);
-    if (add <= 0) {
-      // console.log("d");
+    if (!props.ings) {
       props.history.push("/");
+    } else {
+      let add = 0;
+      Object.values(props.ings).map((el) => (add = add + el));
+      // console.log(add);
+      if (add <= 0) {
+        // console.log("d");
+        props.history.push("/");
+      }
     }
-  }, [props.ings, props.history]);
+  }, []);
   const [loading, setLoading] = useState(false);
   const [pro, setpro] = useState("");
   const [name, setName] = useState("");
@@ -55,11 +63,22 @@ function ContactData(props) {
       if (san === false) {
         setpro("Email is not Correct");
       } else {
-        if (typeof country === "string") {
-          if (typeof price === "number" && price === props.price + 20 + 20) {
+        let count = Number(country);
+        // console.log(count);
+        if (count !== "NaN") {
+          let post = Number(pincode);
+          if (
+            typeof price === "number" &&
+            price === props.price + 20 + 20 &&
+            post !== "NaN"
+          ) {
+            alert("orderPlaced");
             orderHandler();
+          } else {
+            setpro("Should Be in Number");
           }
         } else {
+          alert("Not");
           setpro("Country Should be in String");
         }
       }
